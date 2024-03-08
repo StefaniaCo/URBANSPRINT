@@ -56,10 +56,11 @@ CREATE TABLE IF NOT EXISTS `ing_soft`.`rutas` (
   `id_ruta` INT(11) NOT NULL,
   `nombre_ruta` VARCHAR(255) NULL DEFAULT NULL,
   `descripcion_ruta` VARCHAR(255) NULL DEFAULT NULL,
+  `hora_entrada` DATETIME NULL DEFAULT NULL,
+  `hora_salida` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`id_ruta`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
-
 
 -- -----------------------------------------------------
 -- Table `ing_soft`.`autobus`
@@ -69,6 +70,7 @@ CREATE TABLE IF NOT EXISTS `ing_soft`.`autobus` (
   `id_conductor_autobus` INT(11) NULL DEFAULT NULL,
   `id_ruta_autobus` INT(11) NULL DEFAULT NULL,
   `capacidad_maxima_autobus` INT(11) NULL DEFAULT NULL,
+  `estado_autobus` ENUM('Operativo', 'Fuera de servicio', 'Problemas técnicos'),
   PRIMARY KEY (`id_autobus`),
   INDEX `id_conductor_autobus` (`id_conductor_autobus` ASC) VISIBLE,
   INDEX `id_ruta_autobus` (`id_ruta_autobus` ASC) VISIBLE,
@@ -77,10 +79,10 @@ CREATE TABLE IF NOT EXISTS `ing_soft`.`autobus` (
     REFERENCES `ing_soft`.`conductores` (`id_conductor`),
   CONSTRAINT `autobus_ibfk_2`
     FOREIGN KEY (`id_ruta_autobus`)
-    REFERENCES `ing_soft`.`rutas` (`id_ruta`))
+    REFERENCES `ing_soft`.`rutas` (`id_ruta`)
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
-
 
 -- -----------------------------------------------------
 -- Table `ing_soft`.`conteo_pasajeros`
